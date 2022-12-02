@@ -19,4 +19,19 @@ public class Day02Tests
         // Assert
         Assert.Equal(expectedResult, score);
     }
+
+    [Fact]
+    public void RockPaperScissorsPart2_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var input = "A Y\r\nB X\r\nC Z";
+        
+        const int expectedResult = 12;
+
+        // Act
+        var score = Day02.RockPaperScissorsPart2(input);
+
+        // Assert
+        Assert.Equal(expectedResult, score);
+    }
 }

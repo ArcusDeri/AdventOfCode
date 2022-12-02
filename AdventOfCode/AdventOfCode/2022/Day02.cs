@@ -10,7 +10,7 @@ public static class Day02
     // +0 for lose
     // +3 for draw
     // +6 for win
-    private static Dictionary<string, int> RoundToScoreMap = new()
+    private static readonly Dictionary<string, int> RoundToScoreMap = new()
     {
         {"A X", 1 + 3},
         {"A Y", 2 + 6},
@@ -29,6 +29,35 @@ public static class Day02
         for (int i = 0; i < input.Length; i += 5)
         {
             score += RoundToScoreMap[input[i..(i + 3)]];
+        }
+
+        return score;
+    }
+
+    public static int RockPaperScissorsPart2(string input)
+    {
+        var score = 0;
+        for (int i = 0; i < input.Length; i += 5)
+        {
+            var firstChar = input[i];
+            var thirdChar = input[i + 2];
+
+            if (firstChar == 'B')
+            {
+                score += RoundToScoreMap[input[i..(i + 3)]];
+            }
+            else if (firstChar == 'A')
+            {
+                score += thirdChar == 'X'
+                    ? RoundToScoreMap[$"{firstChar} Z"]
+                    : RoundToScoreMap[$"{firstChar} {(char) (thirdChar - 1)}"];
+            }
+            else
+            {
+                score += thirdChar == 'Z'
+                    ? RoundToScoreMap[$"{firstChar} X"]
+                    : RoundToScoreMap[$"{firstChar} {(char) (thirdChar + 1)}"];
+            }
         }
 
         return score;
