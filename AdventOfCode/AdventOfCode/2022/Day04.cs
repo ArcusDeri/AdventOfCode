@@ -23,4 +23,30 @@ public static class Day04
         }
         return containedCount;
     }
+
+    public static int CampCleanupPart2(string input)
+    {
+        var lines = input.Split("\r\n");
+        var overlappingCount = 0;
+
+        foreach (var line in lines)
+        {
+            var pairs = line.Split(',');
+            var pair1Sections = pairs[0].Split('-').Select(int.Parse).ToArray();
+            var pair2Sections = pairs[1].Split('-').Select(int.Parse).ToArray();
+            if (pair1Sections[0] >= pair2Sections[0] && pair1Sections[0] <= pair2Sections[1])
+            {
+                overlappingCount++;
+            }
+            else if (pair1Sections[1] >= pair2Sections[0] && pair1Sections[1] <= pair2Sections[1])
+            {
+                overlappingCount++;
+            }
+            else if (pair1Sections[0] <= pair2Sections[0] && pair1Sections[1] >= pair2Sections[1])
+            {
+                overlappingCount++;
+            }
+        }
+        return overlappingCount;
+    }
 }
