@@ -2,13 +2,13 @@
 
 public static class Day06
 {
-    public static int TuningTroublePart1(string input)
+    public static int TuningTrouble(string input, int distinctCharactersCount)
     {
         var charMap = new Dictionary<char, int>();
         var charPos = 0;
-        while (charMap.Count < 4)
+        while (charMap.Count < distinctCharactersCount)
         {
-            for (int aheadLookupPos = charPos; aheadLookupPos <  charPos + 4 ; aheadLookupPos++)
+            for (int aheadLookupPos = charPos; aheadLookupPos <  charPos + distinctCharactersCount ; aheadLookupPos++)
             {
                 if (charMap.ContainsKey(input[aheadLookupPos]))
                 {
@@ -17,7 +17,7 @@ public static class Day06
                 }
 
                 charMap[input[aheadLookupPos]] = default;
-                if (charMap.Count == 4)
+                if (charMap.Count == distinctCharactersCount)
                 {
                     return aheadLookupPos + 1;
                 }
