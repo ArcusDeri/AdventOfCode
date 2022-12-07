@@ -24,6 +24,32 @@ public class Day07
         return candidateDirSizes;
     }
 
+    public static int NoSpaceLeftOnDevicePart2(string input)
+    {
+        const int totalDiskSpace = 70_000_000;
+        const int spaceNeeded = 30_000_000;
+        var root = ResolveFileSystemTree(input);
+        var unusedSpace = totalDiskSpace - root.Size;
+        var minDirectorySize = root.Size;
+
+        var stack = new Stack<TreeNode>(new[] {root});
+        while (stack.Any())
+        {
+            var current = stack.Pop();
+            if (unusedSpace + current.Size > spaceNeeded)
+            {
+                minDirectorySize = Math.Min(minDirectorySize, current.Size);
+            }
+
+            foreach (var dir in current.Directories.Values)
+            {
+                stack.Push(dir);
+            }
+        }
+
+        return minDirectorySize;
+    }
+
     private static TreeNode ResolveFileSystemTree(string input)
     {
         var root = new TreeNode("/");
