@@ -18,4 +18,18 @@ public class Day08Tests
         // Assert
         Assert.Equal(expectedResult, result);
     }
+
+    [Fact]
+    public void TreetopTreeHousePart2_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        const int expectedScenicScore = 8;
+        var input = "30373\r\n25512\r\n65332\r\n33549\r\n35390";
+
+        // Act
+        var result = Day08.TreetopTreeHousePart2(input);
+
+        // Assert
+        Assert.Equal(expectedScenicScore, result);
+    }
 }

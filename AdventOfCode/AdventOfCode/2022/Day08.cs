@@ -6,7 +6,6 @@ public static class Day08
     {
         var lines = input.Split("\r\n");
         var grid = new int[lines.Length][];
-        var visibleMap = new Dictionary<string, int>();
         var visibleCount = 0;
 
         for (int i = 0; i < lines.Length; i++)
@@ -95,5 +94,73 @@ public static class Day08
             }
         }
         return visibleCount;
+    }
+
+    public static int TreetopTreeHousePart2(string input)
+    {
+        var lines = input.Split("\r\n");
+        var grid = new int[lines.Length][];
+        var scenicScore = 0;
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var digits = lines[i].ToCharArray();
+            grid[i] = new int[digits.Length];
+            for (int j = 0; j < digits.Length; j++)
+            {
+                grid[i][j] = int.Parse(digits[j].ToString());
+            }
+        }
+
+        for (int y = 0; y < grid.Length; y++)
+        {
+            for (int x = 0; x < grid[y].Length; x++)
+            {
+                var currentValue = grid[y][x];
+                var distanceFromLeft = 0;
+                for (int i = x - 1; i >= 0; i--)
+                {
+                    distanceFromLeft++;
+                    if (grid[y][i] >= currentValue)
+                    {
+                        break;
+                    }
+                }
+
+                var distanceFromRight = 0;
+                for (int i = x + 1; i < grid[y].Length; i++)
+                {
+                    distanceFromRight++;
+                    if (grid[y][i] >= currentValue)
+                    {
+                        break;
+                    }
+                }
+
+                var distanceFromTop = 0;
+                for (int i = y - 1; i >= 0; i--)
+                {
+                    distanceFromTop++;
+                    if (grid[i][x] >= currentValue)
+                    {
+                        break;
+                    }
+                }
+
+                var distanceFromBottom = 0;
+                for (int i = y + 1; i < grid.Length; i++)
+                {
+                    distanceFromBottom++;
+                    if (grid[i][x] >= currentValue)
+                    {
+                        break;
+                    }
+                }
+
+                var score = distanceFromLeft * distanceFromRight * distanceFromTop * distanceFromBottom;
+                scenicScore = Math.Max(score, scenicScore);
+            }
+        }
+        return scenicScore;
     }
 }
