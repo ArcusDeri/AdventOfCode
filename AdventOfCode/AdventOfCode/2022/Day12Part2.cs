@@ -1,25 +1,20 @@
 ﻿namespace AdventOfCode._2022;
 
-public class Day12
+public class Day12Part2
 {
-    public static int HillClimbingPart1(string input)
+    public static int HillClimbingPart2(string input)
     {
         var rows = input.Split("\r\n");
         var heights = new int[rows.Length, rows[0].Length];
-        Coords start = null, end = null;
+        Coords start = null;
         for (int i = 0; i < rows.Length; i++)
         {
             for (int j = 0; j < rows[i].Length; j++)
             {
                 heights[i, j] = ResolveHeightForChar(rows[i][j]);
-                if (rows[i][j] == 'S')
-                {
-                    start = new Coords(j, i);
-                }
-
                 if (rows[i][j] == 'E')
                 {
-                    end = new Coords(j, i);
+                    start = new Coords(j, i);
                 }
             }
         }
@@ -29,7 +24,7 @@ public class Day12
         while (finder.IsCrawling)
         {
             var current = finder.CrawlNext();
-            if (current == end)
+            if (rows[current.Y][current.X] == 'a')
             {
                 result = finder.DistanceTo(current);
                 break;
@@ -98,7 +93,7 @@ public class Day12
     {
         public int RowCount => Heights.GetLength(0);
         public int ColumnCount => Heights.GetLength(1);
-        public int[,] Heights { get; }
+        private int[,] Heights { get; }
 
         public HeightMap(int[,] heights)
         {
@@ -110,12 +105,12 @@ public class Day12
             return xy.Neighbors.Where(neighbor => CanMoveFromTo(xy, neighbor));
         }
 
-        public bool Contains(Coords xy)
+        private bool Contains(Coords xy)
         {
             return xy.X >= 0 && xy.Y >= 0 && xy.X < ColumnCount && xy.Y < RowCount;
         }
 
-        public bool CanMoveFromTo(Coords from, Coords to)
+        private bool CanMoveFromTo(Coords from, Coords to)
         {
             if (!Contains(from) || !Contains(to))
             {
@@ -125,16 +120,16 @@ public class Day12
             var destinationHeight = Heights[to.Y, to.X];
             var startHeight = Heights[from.Y, from.X];
 
-            return destinationHeight <= startHeight + 1;
+            return startHeight - destinationHeight <= 1;
         }
     }
 
     private record Coords(int X, int Y)
     {
-        public Coords Up => this with {Y = Y + 1};
-        public Coords Right => this with {X = X + 1};
-        public Coords Down => this with {Y = Y - 1};
-        public Coords Left => this with {X = X - 1};
+        private Coords Up => this with {Y = Y + 1};
+        private Coords Right => this with {X = X + 1};
+        private Coords Down => this with {Y = Y - 1};
+        private Coords Left => this with {X = X - 1};
 
         public IEnumerable<Coords> Neighbors => new[] {Up, Right, Down, Left};
     }

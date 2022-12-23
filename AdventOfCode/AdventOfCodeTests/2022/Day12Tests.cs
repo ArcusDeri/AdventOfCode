@@ -13,7 +13,21 @@ public class Day12Tests
         const int expectedStepCount = 31;
 
         // Act
-        var result = Day12.HillClimbingPart1(input);
+        var result = Day12Part1.HillClimbingPart1(input);
+
+        // Assert
+        Assert.Equal(expectedStepCount, result);
+    }
+
+    [Fact]
+    public void HillClimbingPart2_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var input = "Sabqponm\r\nabcryxxl\r\naccszExk\r\nacctuvwj\r\nabdefghi";
+        const int expectedStepCount = 29;
+
+        // Act
+        var result = Day12Part2.HillClimbingPart2(input);
 
         // Assert
         Assert.Equal(expectedStepCount, result);
